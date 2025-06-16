@@ -6,10 +6,6 @@ Implementation and validation of primal and dual quadratic formulations for Supp
 
 Developed as a lab assignment for the **Bachelor's Degree in Data Science & Engineering** at **Universitat Politècnica de Catalunya (UPC)**, this project focuses on the practical application of constrained optimization to machine learning, specifically for Support Vector Classifiers.
 
-## 📝 Project Overview
-
-This report details the development of a Support Vector Classifier in AMPL, aiming to maximize the margin between separating hyperplanes while minimizing classification errors. The project explores both primal and dual quadratic formulations of the SVC problem.
-
 ## 🛠️ Implementation Details
 
 ### 1. Primal and Dual Quadratic Formulations
