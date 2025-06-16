@@ -1,6 +1,6 @@
 # 🎯 Support Vector Classifier in AMPL
 
-Implementation of primal/dual SVM formulations and RBF kernel for binary classification. Developed for Constrained Optimization course at UPC.
+Implementation of primal/dual SVM formulations and RBF kernel for binary classification. Developed for Mathematical Optimization course at UPC.
 
 ## 📌 Project Context
 
@@ -20,13 +20,3 @@ Developed for the *Mathematical Optimization* course in the **Bachelor's Degree 
 - **AMPL:** For model implementation
 - **Gurobi:** As the solver for optimization problems
 - **Python:** For data generation and formatting (e.g., `sklearn.datasets.make_swiss_roll`)
-
-## 👥 Authors
-
-- Adrián Cerezuela Hernández
-- Ramon Ventura Navarro
-
-## 📚 Course
-
-**Constrained Optimization**
-Universitat Politècnica de Catalunya (UPC)
