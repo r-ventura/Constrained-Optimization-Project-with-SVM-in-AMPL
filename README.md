@@ -30,4 +30,3 @@ Developed for the *Mathematical Optimization* course in the **Bachelor's Degree 
 
 **Constrained Optimization**
 Universitat Politècnica de Catalunya (UPC)
-```
