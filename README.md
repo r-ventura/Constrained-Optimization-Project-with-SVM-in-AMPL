@@ -4,22 +4,22 @@ Implementation of primal/dual SVM formulations and RBF kernel for binary classif
 
 ## 📌 Project Context
 
-[cite_start]Developed for the *Constrained Optimization* course in the **Bachelor's Degree in Data Science and Engineering** at **Universitat Politècnica de Catalunya (UPC)**, this project implements Support Vector Machines (SVM) using AMPL with Gurobi solver[cite: 1, 5, 6].
+Developed for the *Constrained Optimization* course in the **Bachelor's Degree in Data Science and Engineering** at **Universitat Politècnica de Catalunya (UPC)**, this project implements Support Vector Machines (SVM) using AMPL with Gurobi solver.
 
 ## 📊 Problem Definition
 
-- [cite_start]**Objective:** Find optimal separating hyperplanes for binary classification by finding two parallel hyperplanes ($w^{T}x+\gamma$) that separate two classes such that classification errors are minimized and the margin between hyperplanes is maximized[cite: 5].
+- **Objective:** Find optimal separating hyperplanes for binary classification by finding two parallel hyperplanes ($w^{T}x+\gamma$) that separate two classes such that classification errors are minimized and the margin between hyperplanes is maximized.
 - **Formulations:**
-  - [cite_start]Primal quadratic problem (maximize margin + minimize errors) [cite: 5, 8]
-  - [cite_start]Dual quadratic problem (kernelizable formulation) [cite: 5, 11]
-  - [cite_start]RBF kernel extension for non-linear separation [cite: 6, 67]
-- [cite_start]**Key Parameter:** Regularization constant `c` (parameter $\nu$ in the formulation) weights the opposite objectives of maximizing margin and minimizing errors[cite: 5, 6]. [cite_start]An optimal `c=2` was decided after some tries[cite: 4, 19, 20].
+  - Primal quadratic problem (maximize margin + minimize errors)
+  - Dual quadratic problem (kernelizable formulation)
+  - RBF kernel extension for non-linear separation
+- **Key Parameter:** Regularization constant `c` (parameter $\nu$ in the formulation) weights the opposite objectives of maximizing margin and minimizing errors. An optimal `c=2` was decided after some tries.
 
 ## ⚙️ Methodology
 
 ### 1. Core Implementations
 
-- [cite_start]**Primal Formulation** [cite: 5, 8]
+- **Primal Formulation**
   ```AMPL
   #parameters
   param m > 0;
@@ -40,7 +40,7 @@ Implementation of primal/dual SVM formulations and RBF kernel for binary classif
   subject to c1{i in {1..m}}: -y[i]*(sum{j in {1..n}}(x[i,j]*w[j])+gamma) -s[i]+1<=0;
   ```
  
-- [cite_start]**Dual Formulation (Linear Kernel)** [cite: 5, 11]
+- **Dual Formulation (Linear Kernel)**
   ```AMPL
   #parameters
   param m > 0;
@@ -60,7 +60,7 @@ Implementation of primal/dual SVM formulations and RBF kernel for binary classif
   subject to c2: sum{i in {1..m}}(y[i]*lambda[i]) = 0;
   ```
  
-- [cite_start]**Dual Formulation (RBF Kernel)** [cite: 6, 67]
+- **Dual Formulation (RBF Kernel)**
   ```AMPL
   #parameters
   param m;
@@ -83,31 +83,31 @@ Implementation of primal/dual SVM formulations and RBF kernel for binary classif
 ### 2. Model Validation
 
 - **Datasets:**
-  - [cite_start]**Dataset 1 (Generated):** Custom-generated with a specific seed, consisting of 100 training points and 50 testing points in $\mathbb{R}^4$[cite: 4, 20, 21].
-  - **Dataset 2 (OpenML Diabetes):** Downloaded from OpenML website, related to diabetes diagnostics. [cite_start]Contains 768 instances (700 used: 350 for training, 350 for testing) with 8 numeric features and one symbolic feature for class value[cite: 5, 24, 25, 26].
-  - [cite_start]**Dataset 3 (Sklearn Swiss Roll):** Generated using `sklearn.datasets.make_swiss_roll(m)` from the Python `sklearn` library, with 300 training points and 50 testing points in $\mathbb{R}^3$[cite: 9, 73, 74]. [cite_start]This dataset is linearly non-separable[cite: 9, 73].
-- [cite_start]**Metrics:** Training and testing accuracies are computed[cite: 5, 31].
-- [cite_start]**Workflow:** AMPL `.run` files (`svm_primal.run`, `svm_dual.run`) calculate accuracies by comparing predicted values ($w^{T}\cdot x+\gamma$) with true labels[cite: 5, 30, 40, 42]. [cite_start]For the dual problem, `w` and `gamma` are first calculated from the dual solution[cite: 7, 57].
+  - **Dataset 1 (Generated):** Custom-generated with a specific seed, consisting of 100 training points and 50 testing points in $\mathbb{R}^4$.
+  - **Dataset 2 (OpenML Diabetes):** Downloaded from OpenML website, related to diabetes diagnostics. Contains 768 instances (700 used: 350 for training, 350 for testing) with 8 numeric features and one symbolic feature for class value.
+  - **Dataset 3 (Sklearn Swiss Roll):** Generated using `sklearn.datasets.make_swiss_roll(m)` from the Python `sklearn` library, with 300 training points and 50 testing points in $\mathbb{R}^3$. This dataset is linearly non-separable.
+- **Metrics:** Training and testing accuracies are computed.
+- **Workflow:** AMPL `.run` files (`svm_primal.run`, `svm_dual.run`) calculate accuracies by comparing predicted values ($w^{T}\cdot x+\gamma$) with true labels. For the dual problem, `w` and `gamma` are first calculated from the dual solution.
 
 ## 📈 Key Findings
 
-- [cite_start]**Model Consistency:** Primal and dual solutions coincided for Dataset 1, validating the models[cite: 8, 59].
+- **Model Consistency:** Primal and dual solutions coincided for Dataset 1, validating the models.
 - **Accuracy Overview:**
-  - [cite_start]**Dataset 1 (Linear Kernel):** 93% training accuracy, 88% testing accuracy[cite: 8, 60].
-  - [cite_start]**Dataset 2 (Linear Kernel):** 77% training accuracy, 81% testing accuracy[cite: 9, 64].
-  - [cite_start]**Dataset 3 (RBF Kernel):** Achieved the most precise results with 100% training accuracy and 98% testing accuracy, demonstrating superior performance on non-linearly separable data[cite: 12, 79].
-- [cite_start]**Parameter Analysis:** The regularization parameter `c` was set to 2[cite: 4, 20]. [cite_start]For the RBF kernel, `gamma` (related to $\sigma$) was used as $1/n$[cite: 9, 68, 69, 70].
+  - **Dataset 1 (Linear Kernel):** 93% training accuracy, 88% testing accuracy.
+  - **Dataset 2 (Linear Kernel):** 77% training accuracy, 81% testing accuracy.
+  - **Dataset 3 (RBF Kernel):** Achieved the most precise results with 100% training accuracy and 98% testing accuracy, demonstrating superior performance on non-linarly separable data.
+- **Parameter Analysis:** The regularization parameter `c` was set to 2. For the RBF kernel, `gamma` (related to $\sigma$) was used as $1/n$.
 
 ## 🛠️ Tools & Libraries
 
-- [cite_start]**AMPL:** For model implementation [cite: 1, 5, 7, 12]
-- [cite_start]**Gurobi:** As the solver for optimization problems [cite: 5, 35, 46, 78]
-- [cite_start]**Python:** For data generation and formatting (e.g., `sklearn.datasets.make_swiss_roll`) [cite: 5, 28, 73, 75]
+- **AMPL:** For model implementation
+- **Gurobi:** As the solver for optimization problems
+- **Python:** For data generation and formatting (e.g., `sklearn.datasets.make_swiss_roll`)
 
 ## 👥 Authors
 
-- [cite_start]Adrián Cerezuela Hernández [cite: 1]
-- [cite_start]Ramon Ventura Navarro [cite: 1]
+- Adrián Cerezuela Hernández
+- Ramon Ventura Navarro
 
 ## 📚 Course
 
