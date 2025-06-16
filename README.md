@@ -1,5 +1,3 @@
-Here's a README and description for your report file, following the style of your provided example:
-
 ## 📐 Constrained Optimization: Support Vector Classifier in AMPL
 
 Implementation and validation of primal and dual quadratic formulations for Support Vector Classifiers (SVC) using AMPL, including an alternative implementation with an RBF kernel.
